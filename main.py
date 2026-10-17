@@ -1,11 +1,36 @@
-import pygame, sys
+from random import random
+
+import pygame, sys, random
+from pygame.math import Vector2
+
+class Snake:
+    def __init__(self):
+        self.body = [Vector2(5,10), Vector2(6,10), Vector2(7,10)]
+
+    def draw_snake(self):
+         for block in self.body:
+            block_rect = pygame.Rect(int(block.x* cell_size),int(block.y*cell_size), cell_size,cell_size)
+            pygame.draw.rect(screen,(183,191,122),block_rect)
+
+class Fruit:
+    def __init__(self):
+        self.x = random.randint(0, cell_nuber - 1)
+        self.y = random.randint(0, cell_nuber - 1)
+        self.pos =pygame.math.Vector2(self.x,self.y)
+
+    def draw_frui t(self):
+        fruit_rect = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y*cell_size),cell_size,cell_size)
+        pygame.draw.rect(screen,(126,166,144),fruit_rect)
 
 
 pygame.init()
-screen = pygame.display.set_mode((400,500))
+cell_size = 40
+cell_nuber = 20
+screen = pygame.display.set_mode((cell_nuber*cell_size,cell_nuber*cell_size))
 clock = pygame.time.Clock()
-test_surface = pygame.Surface((100,200))
 
+fruit = Fruit()
+snake = Snake()
 
 while True:
     for event in pygame.event.get():
@@ -14,8 +39,7 @@ while True:
             sys.exit()
 
     screen.fill((175,215,70))
-    test_surface.fill(pygame.Color('blue'))
-
-    screen.blit(test_surface,(200,250))
+    fruit.draw_fruit()
+    snake.draw_snake()
     pygame.display.update()
     clock.tick(60)
